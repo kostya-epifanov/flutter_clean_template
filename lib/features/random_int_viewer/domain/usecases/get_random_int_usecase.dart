@@ -1,5 +1,5 @@
 import 'package:flutter_clean_template/core/std/result.dart';
-import 'package:flutter_clean_template/features/random_int_viewer/data/repository/random_int_repository.dart';
+import 'package:flutter_clean_template/features/random_int_viewer/data/repositories/random_int_repository.dart';
 
 class GetRandomIntUseCase {
   final IRandomIntRepository repository;

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_clean_template/core/di/locator.dart';
 import 'package:flutter_clean_template/features/random_int_viewer/presentation/ui/random_int_viewer_screen.dart';
 
@@ -14,12 +13,6 @@ class App extends StatefulWidget {
 
 class AppState extends State<App> {
   final GlobalKey<NavigatorState> _navigatorKey = GlobalKey();
-
-  @override
-  void initState() {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,10 +60,7 @@ class AppInternalState extends State<AppInternal> with WidgetsBindingObserver {
         if (!isLocatorInitialized) {
           return Container();
         }
-        return Scaffold(
-          backgroundColor: const Color(0xFF333333),
-          body: child ?? Container(),
-        );
+        return child ?? Container();
       },
     );
   }

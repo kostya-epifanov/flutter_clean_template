@@ -16,6 +16,17 @@ class RandomIntViewerScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return const Scaffold(
+      backgroundColor: Color(0xFF333333),
+      body: Center(
+        child: Text(
+          'RandomIntViewerScreen',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 24,
+          ),
+        ),
+      ),
+    );
   }
 }
