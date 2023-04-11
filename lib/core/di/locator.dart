@@ -1,4 +1,3 @@
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_clean_template/core/navigation/global_navigator.dart';
@@ -37,14 +36,15 @@ void _setupServices() {
 }
 
 void _setupDataSources() {
-  locator.registerLazySingleton(() => ConnectivityDataSource(locator()));
+  locator.registerLazySingleton<IConnectivityDataSource>(() => ConnectivityDataSource(locator()));
   locator.registerLazySingleton(() => RandomIntRemoteDataSource(locator()));
   locator.registerLazySingleton(() => RandomIntLocalDataSource());
 }
 
 void _setupRepositories() {
-  locator.registerLazySingleton(() => ConnectivityRepository(locator()));
-  locator.registerLazySingleton(() => RandomIntRepository(locator(), locator(), locator()));
+  locator.registerLazySingleton<IConnectivityRepository>(() => ConnectivityRepository(locator()));
+  locator.registerLazySingleton<IRandomIntRepository>(
+      () => RandomIntRepository(locator(), locator(), locator()));
 }
 
 void _setupUseCases() {
