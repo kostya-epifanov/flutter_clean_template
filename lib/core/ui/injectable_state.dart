@@ -43,7 +43,6 @@ abstract class InjectableState<T extends StatefulWidget, G extends BlocBase<S>, 
   @override
   void didChangeDependencies() {
     try {
-      // ignore: unnecessary_statements
       cubit;
     } on Exception catch (_) {
       throw 'At first you need init the cubit in [initState], [didChangeDependencies] or in [getIt]';

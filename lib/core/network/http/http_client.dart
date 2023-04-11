@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 
 import 'http_interceptor.dart';
@@ -26,7 +24,7 @@ class HttpClient {
       options: Options(method: method),
       data: body,
     );
-    return json.decode(response.data.toString());
+    return response.data;
   }
 
   static String _prepareUrl({

@@ -27,12 +27,45 @@ class _RandomIntViewerScreenState
   ) {
     return Scaffold(
       backgroundColor: const Color(0xFF333333),
-      body: Center(
-        child: Text(
-          '${state.connectivityState}',
-          style: const TextStyle(color: Colors.white, fontSize: 24),
+      body: Align(
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            state.requestStatus.when(
+              notStarted: () => const SizedBox.shrink(),
+              inProgress: () => const CircularProgressIndicator(),
+              failed: () => _buildRetry(),
+              cancelled: () => _buildRetry(),
+              completed: () => Text(
+                state.value.toString(),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            Text(
+              '${state.connectivityState}',
+              style: const TextStyle(color: Colors.white, fontSize: 24),
+            ),
+            RawMaterialButton(
+              onPressed: cubit.onTapGetRandomInt,
+              child: const Text(
+                'Get random int',
+                style: TextStyle(color: Colors.white, fontSize: 24),
+              ),
+            ),
+          ],
         ),
       ),
+    );
+  }
+
+  //TODO: Add retry widget
+  Widget _buildRetry() {
+    return Container(
+      color: Colors.red,
     );
   }
 }
