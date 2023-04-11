@@ -58,6 +58,7 @@ class RandomIntViewerCubit extends Cubit<RandomIntViewerState> {
         requestStatus: const RequestStatus.failed(),
         number: -1,
       ));
+      return;
     }
     emit(state.copyWith(
       requestStatus: const RequestStatus.completed(),

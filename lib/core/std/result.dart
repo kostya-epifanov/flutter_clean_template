@@ -7,13 +7,6 @@ typedef TypedAsyncResultInvocation<T> = Future<Result<T, Exception>> Function();
 
 class Result<T, E extends Exception> {
   static bool silenceErrors = false;
-  static late final Function(String) loggerCallback;
-  static late final Function(
-    dynamic throwable, {
-    dynamic stackTrace,
-    dynamic hint,
-    FutureOr<void> Function(dynamic) withScope,
-  }) analyticsCallback;
 
   bool get isError => this is Error<T, E>;
 
@@ -170,9 +163,6 @@ class Error<T, E extends Exception> extends Result<T, E> {
 
   Error(this._error, [this._stackTrace]) {
     if (Result.silenceErrors) return;
-
-    Result.analyticsCallback(_error, stackTrace: stackTrace);
-    Result.loggerCallback(toString());
   }
 
   @override
