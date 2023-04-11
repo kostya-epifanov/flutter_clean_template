@@ -7,6 +7,6 @@ class ListenConnectivityUseCase {
   ListenConnectivityUseCase(this._connectivityRepository);
 
   Stream<ConnectivityResult> call() {
-    return _connectivityRepository.$connectivity();
+    return _connectivityRepository.connectivity$();
   }
 }

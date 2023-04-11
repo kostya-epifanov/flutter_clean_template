@@ -18,6 +18,7 @@ class RandomIntViewerCubit extends Cubit<RandomIntViewerState> {
   ) : super(const RandomIntViewerState()) {
     _subscriptions.add(_listenConnectivityUsecase()
         .listen((event) => emit(state.copyWith(connectivityState: event))));
+    _loadRandomNumber();
   }
 
   @override
@@ -28,18 +29,22 @@ class RandomIntViewerCubit extends Cubit<RandomIntViewerState> {
     return super.close();
   }
 
-  Future<void> onTapGetRandomInt() async {
+  Future<void> _loadRandomNumber() async {
     emit(state.copyWith(requestStatus: const RequestStatus.inProgress()));
     final result = await _getRandomIntUseCase();
     if (result.isError) {
       emit(state.copyWith(
         requestStatus: const RequestStatus.failed(),
-        value: -1,
+        number: -1,
       ));
     }
     emit(state.copyWith(
       requestStatus: const RequestStatus.completed(),
-      value: result.successResult,
+      number: result.successResult,
     ));
+  }
+
+  void onTapTimerButton() {
+    _loadRandomNumber();
   }
 }

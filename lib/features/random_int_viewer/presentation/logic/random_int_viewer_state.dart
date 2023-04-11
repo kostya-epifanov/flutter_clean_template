@@ -5,23 +5,23 @@ import 'package:flutter_clean_template/core/network/http/request_status.dart';
 class RandomIntViewerState extends Equatable {
   final RequestStatus requestStatus;
   final ConnectivityResult connectivityState;
-  final int value;
+  final int number;
 
   const RandomIntViewerState({
     this.requestStatus = const RequestStatus.notStarted(),
     this.connectivityState = ConnectivityResult.none,
-    this.value = 0,
+    this.number = -1,
   });
 
   RandomIntViewerState copyWith({
     RequestStatus? requestStatus,
     ConnectivityResult? connectivityState,
-    int? value,
+    int? number,
   }) {
     return RandomIntViewerState(
       requestStatus: requestStatus ?? this.requestStatus,
       connectivityState: connectivityState ?? this.connectivityState,
-      value: value ?? this.value,
+      number: number ?? this.number,
     );
   }
 
@@ -29,6 +29,6 @@ class RandomIntViewerState extends Equatable {
   List<Object> get props => [
         requestStatus,
         connectivityState,
-        value,
+        number,
       ];
 }

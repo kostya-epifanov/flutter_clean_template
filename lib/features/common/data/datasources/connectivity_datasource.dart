@@ -2,7 +2,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 
 abstract class IConnectivityDataSource {
   Future<bool> isConnected();
-  Stream<ConnectivityResult> $connectivity();
+  Stream<ConnectivityResult> connectivity$();
 }
 
 class ConnectivityDataSource implements IConnectivityDataSource {
@@ -17,7 +17,7 @@ class ConnectivityDataSource implements IConnectivityDataSource {
   }
 
   @override
-  Stream<ConnectivityResult> $connectivity() {
+  Stream<ConnectivityResult> connectivity$() {
     return _connectivity.onConnectivityChanged;
   }
 }

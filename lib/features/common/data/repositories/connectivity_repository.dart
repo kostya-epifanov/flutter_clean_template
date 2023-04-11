@@ -3,7 +3,7 @@ import 'package:flutter_clean_template/features/common/data/datasources/connecti
 
 abstract class IConnectivityRepository {
   Future<bool> isConnected();
-  Stream<ConnectivityResult> $connectivity();
+  Stream<ConnectivityResult> connectivity$();
 }
 
 class ConnectivityRepository implements IConnectivityRepository {
@@ -17,7 +17,7 @@ class ConnectivityRepository implements IConnectivityRepository {
   }
 
   @override
-  Stream<ConnectivityResult> $connectivity() {
-    return _connectivityDataSource.$connectivity();
+  Stream<ConnectivityResult> connectivity$() {
+    return _connectivityDataSource.connectivity$();
   }
 }

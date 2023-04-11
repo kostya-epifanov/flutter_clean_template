@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_clean_template/core/extensions/connectivity_result.dart';
 import 'package:flutter_clean_template/core/navigation/screen_transitions.dart';
 import 'package:flutter_clean_template/core/ui/injectable_state.dart';
 import 'package:flutter_clean_template/features/random_int_viewer/presentation/logic/random_int_viewer_cubit.dart';
@@ -27,45 +28,74 @@ class _RandomIntViewerScreenState
   ) {
     return Scaffold(
       backgroundColor: const Color(0xFF333333),
-      body: Align(
+      body: Stack(
         alignment: Alignment.center,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            state.requestStatus.when(
-              notStarted: () => const SizedBox.shrink(),
-              inProgress: () => const CircularProgressIndicator(),
-              failed: () => _buildRetry(),
-              cancelled: () => _buildRetry(),
-              completed: () => Text(
-                state.value.toString(),
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
-              ),
-            ),
-            Text(
-              '${state.connectivityState}',
-              style: const TextStyle(color: Colors.white, fontSize: 24),
-            ),
-            RawMaterialButton(
-              onPressed: cubit.onTapGetRandomInt,
-              child: const Text(
-                'Get random int',
-                style: TextStyle(color: Colors.white, fontSize: 24),
-              ),
-            ),
-          ],
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Spacer(),
+              _buildNumberWidget(state),
+              _buildTimerButton(),
+              const Spacer(),
+              _buildConnectivityLabel(state),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildNumberWidget(RandomIntViewerState state) {
+    return state.requestStatus.when(
+      notStarted: () => const SizedBox.shrink(),
+      failed: () => const SizedBox.shrink(),
+      cancelled: () => const SizedBox.shrink(),
+      inProgress: () => const SizedBox(
+        width: 60,
+        height: 60,
+        child: CircularProgressIndicator(),
+      ),
+      completed: () => Text(
+        state.number.toString(),
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 48,
         ),
       ),
     );
   }
 
-  //TODO: Add retry widget
-  Widget _buildRetry() {
-    return Container(
-      color: Colors.red,
+  Widget _buildConnectivityLabel(RandomIntViewerState state) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Row(
+        children: [
+          Container(
+            width: 10,
+            height: 10,
+            decoration: BoxDecoration(
+              color: state.connectivityState.color,
+              shape: BoxShape.circle,
+            ),
+          ),
+          const SizedBox(width: 8),
+          Text(
+            state.connectivityState.status,
+            style: const TextStyle(color: Colors.white, fontSize: 16),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTimerButton() {
+    return RawMaterialButton(
+      onPressed: cubit.onTapTimerButton,
+      child: const Text(
+        'Get random int',
+        style: TextStyle(color: Colors.white, fontSize: 24),
+      ),
     );
   }
 }
