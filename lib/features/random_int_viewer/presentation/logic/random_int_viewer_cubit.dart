@@ -1,10 +1,15 @@
 import 'dart:async';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:equatable/equatable.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_clean_template/core/network/http/request_status.dart';
 import 'package:flutter_clean_template/features/common/domain/listen_connectivity_usecase.dart';
 import 'package:flutter_clean_template/features/random_int_viewer/domain/usecases/get_random_int_usecase.dart';
-import 'package:flutter_clean_template/features/random_int_viewer/presentation/logic/random_int_viewer_state.dart';
+
+part 'random_int_viewer_state.dart';
+
+const int _timerDuration = 30;
 
 class RandomIntViewerCubit extends Cubit<RandomIntViewerState> {
   final ListenConnectivityUseCase _listenConnectivityUsecase;
@@ -29,20 +34,20 @@ class RandomIntViewerCubit extends Cubit<RandomIntViewerState> {
     );
   }
 
-  void _onTimerTick() {
-    emit(state.copyWith(timerCounter: state.timerCounter - 1));
-    if (state.timerCounter <= 0) {
-      _loadRandomNumber();
-      emit(state.copyWith(timerCounter: 30));
-    }
-  }
-
   @override
   Future<void> close() {
+    _timer.cancel();
     for (final s in _subscriptions) {
       s.cancel();
     }
     return super.close();
+  }
+
+  Future<void> _onTimerTick() async {
+    emit(state.copyWith(timerCounter: state.timerCounter - 1));
+    if (state.timerCounter <= 0) {
+      _loadRandomNumber();
+    }
   }
 
   Future<void> _loadRandomNumber() async {
@@ -57,11 +62,11 @@ class RandomIntViewerCubit extends Cubit<RandomIntViewerState> {
     emit(state.copyWith(
       requestStatus: const RequestStatus.completed(),
       number: result.successResult,
+      timerCounter: _timerDuration,
     ));
   }
 
-  void onTapGetRandomNumber() {
-    emit(state.copyWith(timerCounter: 30));
+  Future<void> onTapGetRandomNumber() async {
     _loadRandomNumber();
   }
 }

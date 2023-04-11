@@ -1,6 +1,4 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:equatable/equatable.dart';
-import 'package:flutter_clean_template/core/network/http/request_status.dart';
+part of 'random_int_viewer_cubit.dart';
 
 class RandomIntViewerState extends Equatable {
   final RequestStatus requestStatus;
@@ -11,8 +9,8 @@ class RandomIntViewerState extends Equatable {
   const RandomIntViewerState({
     this.requestStatus = const RequestStatus.notStarted(),
     this.connectivityState = ConnectivityResult.none,
-    this.number = -1,
-    this.timerCounter = 30,
+    this.number = 0,
+    this.timerCounter = _timerDuration,
   });
 
   RandomIntViewerState copyWith({
