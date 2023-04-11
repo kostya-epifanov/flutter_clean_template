@@ -6,13 +6,13 @@ extension ConnectivityResultX on ConnectivityResult {
     switch (this) {
       case ConnectivityResult.mobile:
       case ConnectivityResult.wifi:
-        return 'Connected';
+        return 'CONNECTED';
       case ConnectivityResult.bluetooth:
       case ConnectivityResult.ethernet:
       case ConnectivityResult.vpn:
       case ConnectivityResult.other:
       case ConnectivityResult.none:
-        return 'Disconnected';
+        return 'DISCONNECTED';
     }
   }
 

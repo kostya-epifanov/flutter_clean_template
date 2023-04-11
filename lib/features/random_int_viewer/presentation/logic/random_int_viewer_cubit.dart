@@ -10,6 +10,8 @@ class RandomIntViewerCubit extends Cubit<RandomIntViewerState> {
   final ListenConnectivityUseCase _listenConnectivityUsecase;
   final GetRandomIntUseCase _getRandomIntUseCase;
 
+  late Timer _timer;
+
   final List<StreamSubscription> _subscriptions = [];
 
   RandomIntViewerCubit(
@@ -18,7 +20,21 @@ class RandomIntViewerCubit extends Cubit<RandomIntViewerState> {
   ) : super(const RandomIntViewerState()) {
     _subscriptions.add(_listenConnectivityUsecase()
         .listen((event) => emit(state.copyWith(connectivityState: event))));
+
     _loadRandomNumber();
+
+    _timer = Timer.periodic(
+      const Duration(milliseconds: 1000),
+      (timer) => _onTimerTick(),
+    );
+  }
+
+  void _onTimerTick() {
+    emit(state.copyWith(timerCounter: state.timerCounter - 1));
+    if (state.timerCounter <= 0) {
+      _loadRandomNumber();
+      emit(state.copyWith(timerCounter: 30));
+    }
   }
 
   @override
@@ -44,7 +60,8 @@ class RandomIntViewerCubit extends Cubit<RandomIntViewerState> {
     ));
   }
 
-  void onTapTimerButton() {
+  void onTapGetRandomNumber() {
+    emit(state.copyWith(timerCounter: 30));
     _loadRandomNumber();
   }
 }

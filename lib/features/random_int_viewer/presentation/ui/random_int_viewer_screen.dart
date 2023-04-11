@@ -36,9 +36,17 @@ class _RandomIntViewerScreenState
             children: [
               const Spacer(),
               _buildNumberWidget(state),
-              _buildTimerButton(),
               const Spacer(),
-              _buildConnectivityLabel(state),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    _buildConnectivityLabel(state),
+                    _buildTimerButton(state),
+                  ],
+                ),
+              ),
             ],
           ),
         ],
@@ -54,47 +62,49 @@ class _RandomIntViewerScreenState
       inProgress: () => const SizedBox(
         width: 60,
         height: 60,
-        child: CircularProgressIndicator(),
+        child: CircularProgressIndicator(strokeWidth: 8),
       ),
       completed: () => Text(
         state.number.toString(),
         style: const TextStyle(
           color: Colors.white,
-          fontSize: 48,
+          fontSize: 96,
         ),
       ),
     );
   }
 
   Widget _buildConnectivityLabel(RandomIntViewerState state) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Row(
-        children: [
-          Container(
-            width: 10,
-            height: 10,
-            decoration: BoxDecoration(
-              color: state.connectivityState.color,
-              shape: BoxShape.circle,
-            ),
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: 12,
+          height: 12,
+          decoration: BoxDecoration(
+            color: state.connectivityState.color,
+            shape: BoxShape.circle,
           ),
-          const SizedBox(width: 8),
-          Text(
-            state.connectivityState.status,
-            style: const TextStyle(color: Colors.white, fontSize: 16),
+        ),
+        const SizedBox(width: 8),
+        Text(
+          state.connectivityState.status,
+          style: const TextStyle(
+            fontWeight: FontWeight.w500,
+            color: Colors.white,
+            fontSize: 12,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
-  Widget _buildTimerButton() {
-    return RawMaterialButton(
-      onPressed: cubit.onTapTimerButton,
-      child: const Text(
-        'Get random int',
-        style: TextStyle(color: Colors.white, fontSize: 24),
+  Widget _buildTimerButton(RandomIntViewerState state) {
+    return TextButton(
+      onPressed: cubit.onTapGetRandomNumber,
+      child: Text(
+        'GET RANDOM NUMBER [${state.timerCounter}]',
+        style: const TextStyle(color: Colors.white, fontSize: 12),
       ),
     );
   }
