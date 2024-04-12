@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_clean_template/core/extensions/connectivity_result.dart';
 import 'package:flutter_clean_template/core/navigation/screen_transitions.dart';
 import 'package:flutter_clean_template/core/ui/injectable_state.dart';
 import 'package:flutter_clean_template/features/random_int_viewer/presentation/logic/random_int_viewer_cubit.dart';
